@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from schemas.contact import ContactSchema
+from models.contact import ContactModel
 
 contact_schema = ContactSchema()
 contact_list_schema = ContactSchema(many=True)
@@ -20,4 +21,4 @@ class Contact(Resource):
 
 class ContactList(Resource):
     def get(self):
-        return {"content": "GET: contacts"}
+        return {"content": contact_list_schema.dump(ContactModel.find_all())}
