@@ -2,17 +2,17 @@ from flask_restful import Resource
 
 class Contact(Resource):
     def get(self):
-        return {"content": "contact"}
+        return {"content": "GET: contact"}
     
     def post(self):
-        pass
+        return {"content": "POST: contact"}
 
     def put(self):
-        pass
+        return {"content": "PUT: contact"}
 
     def delete(self):
-        pass
+        return {"content": "DELETE: contact"}
 
 class ContactList(Resource):
     def get(self):
-        return {"content": "contacts"}
+        return {"content": "GET: contacts"}
