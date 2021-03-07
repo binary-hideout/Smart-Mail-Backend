@@ -7,6 +7,7 @@ from marshmallow import ValidationError
 contact_schema = ContactSchema()
 contact_list_schema = ContactSchema(many=True)
 
+
 class Contact(Resource):
     def get(self, email: str):
         contact = ContactModel.find_by_email(email)
@@ -31,7 +32,7 @@ class Contact(Resource):
             contact.save_to_db()
         except:
             return {"message": f"ERROR: Couldn't save to database <email={email}>"}
-            
+
         return contact_schema.dump(contact)
 
     def put(self, email: str):
