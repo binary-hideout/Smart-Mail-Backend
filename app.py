@@ -4,6 +4,7 @@ from flask_restful import Api
 from resources.contact import Contact, ContactList
 
 from db import db
+from ma import ma
 
 from dotenv import load_dotenv
 
@@ -22,4 +23,5 @@ api.add_resource(ContactList, "/contacts")
 
 if __name__ == "__main__":
     db.init_app(app)
+    ma.init_app(app)
     app.run(debug=True)
