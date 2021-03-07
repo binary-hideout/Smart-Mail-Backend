@@ -36,11 +36,20 @@ class Contact(Resource):
         return contact_schema.dump(contact)
 
     def put(self, email: str):
-        return {"content": f"PUT: contact <email={email}>"}
+        contact_json = request.get_json()
+        contact = ContactModel.find_by_email(email)
+        if contact:
+            contact.first_name = contact_json["first_name"]
+            contact.last_name = contact_json["last_name"]
+            contact.phone = contact_json["phone"]
+        else:
+            contact_json["email"] = email
+            contact = contact_schema.load(contact_json)
+        contact.save_to_db()
+        return contact_schema.dump(contact)
 
     def delete(self, email: str):
-        return {"content": f"DELETE: contact <email={email}>"}
-
+        pass
 
 class ContactList(Resource):
     def get(self):
