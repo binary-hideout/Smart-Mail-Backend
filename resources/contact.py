@@ -15,7 +15,24 @@ class Contact(Resource):
         return {"message": f"ERROR: Couldn't find requested contact <email={email}>"}
 
     def post(self, email: str):
-        pass
+        contact = ContactModel.find_by_email(email)
+        if contact:
+            return {"message": f"ERROR: Contact already exists <email={email}>"}
+
+        contact_json = request.get_json()
+        contact_json["email"] = email
+
+        try:
+            contact = contact_schema.load(contact_json)
+        except ValidationError as err:
+            return err.message
+
+        try:
+            contact.save_to_db()
+        except:
+            return {"message": f"ERROR: Couldn't save to database <email={email}>"}
+            
+        return contact_schema.dump(contact)
 
     def put(self, email: str):
         return {"content": f"PUT: contact <email={email}>"}
