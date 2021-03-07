@@ -22,6 +22,7 @@ class Contact(Resource):
 
         contact_json = request.get_json()
         contact_json["email"] = email
+        contact_json["phone"] = "+52" + contact_json["phone"]
 
         try:
             contact = contact_schema.load(contact_json)
@@ -41,7 +42,7 @@ class Contact(Resource):
         if contact:
             contact.first_name = contact_json["first_name"]
             contact.last_name = contact_json["last_name"]
-            contact.phone = contact_json["phone"]
+            contact.phone = "+52" + contact_json["phone"]
         else:
             contact_json["email"] = email
             contact = contact_schema.load(contact_json)
