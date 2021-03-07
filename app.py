@@ -5,7 +5,12 @@ from resources.contact import Contact, ContactList
 
 from db import db
 
+from dotenv import load_dotenv
+
 app = Flask(__name__)
+load_dotenv('.env', verbose=True)
+app.config.from_object('default_settings')
+app.config.from_envvar('APPLICATION_SETTINGS')
 api = Api(app)
 
 @app.before_first_request
