@@ -49,7 +49,11 @@ class Contact(Resource):
         return contact_schema.dump(contact)
 
     def delete(self, email: str):
-        pass
+        contact = ContactModel.find_by_email(email)
+        if contact:
+            contact.delete_from_db()
+            return {"message": f"deleted contact <email={email}>"}
+        return {"message": f"ERROR: Couldn't delete from database <email={email}>"}
 
 class ContactList(Resource):
     def get(self):
