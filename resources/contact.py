@@ -1,5 +1,8 @@
 from flask_restful import Resource
+from schemas.contact import ContactSchema
 
+contact_schema = ContactSchema()
+contact_list_schema = ContactSchema(many=True)
 
 class Contact(Resource):
     def get(self, email: str):
