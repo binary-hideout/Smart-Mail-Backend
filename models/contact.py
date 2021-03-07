@@ -8,8 +8,8 @@ class ContactModel(db.Model):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), nullable=False)
-    phone = db.Column(db.Integer, nullable=False)
-    created = db.Column(db.DateTime, default=datetime.now())
+    phone = db.Column(db.String(25), nullable=False)
+    created = db.Column(db.DateTime, default=datetime.today())
     status = db.Column(db.String(25), default="To be resolved")
 
     def __repr__(self):
