@@ -1,3 +1,4 @@
+from typing import List
 from db import db
 
 class TagModel(db.Model):
@@ -9,3 +10,15 @@ class TagModel(db.Model):
 
     def __repr__(self):
         return f"<Tag={self.title}>"
+
+    @classmethod
+    def find_all(cls) -> List["TagModel"]:
+        return cls.query.all()
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self) -> None:
+        db.session.delete(self)
+        db.session.commit()
