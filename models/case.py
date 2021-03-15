@@ -1,3 +1,4 @@
+from typing import List
 from db import db
 
 class CaseModel(db.Model):
@@ -10,3 +11,19 @@ class CaseModel(db.Model):
 
     def __repr__(self):
         return f"<Case={self.title}>"
+
+    @classmethod
+    def find_by_email(cls, title: str) -> "CaseModel":
+        return cls.query.filter_by(title=title).first()
+
+    @classmethod
+    def find_all(cls) -> List["CaseModel"]:
+        return cls.query.all()
+
+    def save_to_db(self) -> None:
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self) -> None:
+        db.session.delete(self)
+        db.session.commit()
