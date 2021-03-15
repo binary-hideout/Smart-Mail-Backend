@@ -42,9 +42,14 @@ class Contact(Resource):
         if contact:
             contact.first_name = contact_json["first_name"]
             contact.last_name = contact_json["last_name"]
-            contact.phone = "+52" + contact_json["phone"]
+            if contact_json["phone"][:3] == "+52":
+                contact.phone = contact_json["phone"]
+            else:
+                contact.phone = "+52" + contact_json["phone"]
+            contact.status = contact_json["status"]
         else:
             contact_json["email"] = email
+            contact_json["phone"] = "+52" + contact_json["phone"]
             contact = contact_schema.load(contact_json)
         contact.save_to_db()
         return contact_schema.dump(contact)
