@@ -1,6 +1,5 @@
 from ma import ma
 from models.tag import TagModel
-from models.case import CaseModel
 from schemas.case import CaseSchema
 
 
@@ -13,3 +12,4 @@ class TagSchema(ma.SQLAlchemyAutoSchema):
         dump_only = ("id",)
         include_fk = True
         load_instance = True
+

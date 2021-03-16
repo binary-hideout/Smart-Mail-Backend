@@ -46,7 +46,6 @@ class Contact(Resource):
                 contact.phone = contact_json["phone"]
             else:
                 contact.phone = "+52" + contact_json["phone"]
-            contact.status = contact_json["status"]
         else:
             contact_json["email"] = email
             contact_json["phone"] = "+52" + contact_json["phone"]

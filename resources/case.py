@@ -38,8 +38,8 @@ class Case(Resource):
         if case:
             case.title = case_json["title"]
             case.description = case_json["description"]
-            case.tag_id = case_json["tag"].id
-            case.contact_id = case_json["contact"].id
+            case.tag_id = case_json["tag_id"]
+            case.contact_id = case_json["contact_id"]
         else:
             case_json["title"] = title
             case = case_schema.load(case_json)
