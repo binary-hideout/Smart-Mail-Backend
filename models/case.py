@@ -13,7 +13,7 @@ class CaseModel(db.Model):
         return f"<Case={self.title}>"
 
     @classmethod
-    def find_by_email(cls, title: str) -> "CaseModel":
+    def find_by_title(cls, title: str) -> "CaseModel":
         return cls.query.filter_by(title=title).first()
 
     @classmethod
