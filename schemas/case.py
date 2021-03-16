@@ -6,6 +6,6 @@ class CaseSchema(ma.SQLAlchemyAutoSchema):
 
     class Meta:
         model = CaseModel
-        dump_only = ("id",)
+        dump_only = ("id", "created")
         include_fk = True
         load_instance = True
