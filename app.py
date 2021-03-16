@@ -2,6 +2,8 @@ from flask import Flask
 from flask_restful import Api
 
 from resources.contact import Contact, ContactList
+from resources.case import Case, CaseList
+from resources.tag import Tag, TagList
 
 from db import db
 from ma import ma
@@ -23,6 +25,10 @@ def create_tables():
 
 api.add_resource(Contact, "/contact/<string:email>")
 api.add_resource(ContactList, "/contacts")
+api.add_resource(Case, "/case/<string:title>")
+api.add_resource(CaseList, "/cases")
+api.add_resource(Tag, "/tag/<string:title>")
+api.add_resource(TagList, "/tags")
 
 # For local development
 if __name__ == "__main__":
