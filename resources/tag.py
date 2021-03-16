@@ -7,6 +7,7 @@ from marshmallow import ValidationError
 tag_schema = TagSchema()
 tag_list_schema = TagSchema(many=True)
 
+
 class Tag(Resource):
     def get(self, title: str):
         tag = TagModel.find_by_title(title)
@@ -49,6 +50,7 @@ class Tag(Resource):
             tag.delete_from_db()
             return {"message": f"deleted tag <title={title}>"}
         return {"message": "ERROR: Couldn't delete from database"}
+
 
 class TagList(Resource):
     def get(self):

@@ -2,6 +2,7 @@ from typing import List
 from db import db
 from datetime import datetime
 
+
 class ContactModel(db.Model):
     __tablename__ = "contacts"
     id = db.Column(db.Integer, primary_key=True)
@@ -10,7 +11,7 @@ class ContactModel(db.Model):
     email = db.Column(db.String(100), nullable=False)
     phone = db.Column(db.String(25), nullable=False)
     created = db.Column(db.DateTime, default=datetime.today())
-    cases = db.relationship('CaseModel', backref="contact", lazy=True)
+    cases = db.relationship("CaseModel", backref="contact", lazy=True)
 
     def __repr__(self):
         return f"<Contact={self.email}>"

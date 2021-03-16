@@ -11,9 +11,9 @@ from ma import ma
 from dotenv import load_dotenv
 
 app = Flask(__name__)
-load_dotenv('.env', verbose=True)
-app.config.from_object('default_settings')
-app.config.from_envvar('APPLICATION_SETTINGS')
+load_dotenv(".env", verbose=True)
+app.config.from_object("default_settings")
+app.config.from_envvar("APPLICATION_SETTINGS")
 api = Api(app)
 
 # For production
@@ -22,6 +22,7 @@ def create_tables():
     db.init_app(app)
     ma.init_app(app)
     db.create_all()
+
 
 api.add_resource(Contact, "/contact/<string:email>")
 api.add_resource(ContactList, "/contacts")

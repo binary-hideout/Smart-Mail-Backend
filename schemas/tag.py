@@ -3,6 +3,7 @@ from models.tag import TagModel
 from models.case import CaseModel
 from schemas.case import CaseSchema
 
+
 class TagSchema(ma.SQLAlchemyAutoSchema):
     cases = ma.Nested(CaseSchema, many=True)
 

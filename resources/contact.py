@@ -61,6 +61,7 @@ class Contact(Resource):
             return {"message": f"deleted contact <email={email}>"}
         return {"message": f"ERROR: Couldn't delete from database <email={email}>"}
 
+
 class ContactList(Resource):
     def get(self):
         return {"content": contact_list_schema.dump(ContactModel.find_all())}

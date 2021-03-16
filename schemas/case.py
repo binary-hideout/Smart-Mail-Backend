@@ -2,6 +2,7 @@ from ma import ma
 from models.tag import TagModel
 from models.case import CaseModel
 
+
 class CaseSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = CaseModel

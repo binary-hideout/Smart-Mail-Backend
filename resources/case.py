@@ -7,6 +7,7 @@ from marshmallow import ValidationError
 case_schema = CaseSchema()
 case_list_schema = CaseSchema(many=True)
 
+
 class Case(Resource):
     def get(self, title: str):
         case = CaseModel.find_by_title(title)
@@ -51,6 +52,7 @@ class Case(Resource):
             case.delete_from_db()
             return {"message": f"deleted tag <title={title}>"}
         return {"message": "ERROR: Couldn't delete from database"}
+
 
 class CaseList(Resource):
     def get(self):
