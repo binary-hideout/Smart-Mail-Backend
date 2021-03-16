@@ -1,6 +1,5 @@
 from ma import ma
 from models.tag import TagModel
-from models.case import CaseModel
 from schemas.case import CaseSchema
 
 
