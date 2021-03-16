@@ -12,7 +12,7 @@ class TagModel(db.Model):
         return f"<Tag={self.title}>"
 
     @classmethod
-    def find_by_name(cls, title: str) -> "TagModel":
+    def find_by_title(cls, title: str) -> "TagModel":
         return cls.query.filter_by(title=title).first()
 
     @classmethod
