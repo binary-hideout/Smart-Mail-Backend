@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from schemas.contact import ContactSchema
+from schemas.schemas import ContactSchema
 from models.contact import ContactModel
 from marshmallow import ValidationError
 

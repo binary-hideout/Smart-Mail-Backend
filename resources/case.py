@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from schemas.case import CaseSchema
+from schemas.schemas import CaseSchema
 from models.case import CaseModel
 from marshmallow import ValidationError
 
