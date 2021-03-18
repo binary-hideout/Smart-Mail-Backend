@@ -130,3 +130,9 @@ dmypy.json
 
 # Example database
 data.db
+
+# Azure
+.azure/
+
+# Github
+.github/
