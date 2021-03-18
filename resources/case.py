@@ -1,6 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from schemas.case import CaseSchema
+from schemas.schemas import CaseSchema
 from models.case import CaseModel
 from marshmallow import ValidationError
 
@@ -24,7 +24,7 @@ class Case(Resource):
         try:
             case = case_schema.load(case_json)
         except ValidationError as err:
-            return err.message
+            return err.messages
 
         try:
             case.save_to_db()
