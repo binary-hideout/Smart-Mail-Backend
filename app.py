@@ -15,12 +15,12 @@ load_dotenv(".env", verbose=True)
 app.config.from_object("default_settings")
 app.config.from_envvar("APPLICATION_SETTINGS")
 api = Api(app)
+db.init_app(app)
+ma.init_app(app)
 
 # For production
 @app.before_first_request
 def create_tables():
-    db.init_app(app)
-    ma.init_app(app)
     db.create_all()
 
 
