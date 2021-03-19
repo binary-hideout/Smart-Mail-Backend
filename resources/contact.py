@@ -12,8 +12,8 @@ class Contact(Resource):
     def get(self, email: str):
         contact = ContactModel.find_by_email(email)
         if contact:
-            return contact_schema.dump(contact)
-        return {"message": f"ERROR: Couldn't find requested contact <email={email}>"}
+            return contact_schema.dump(contact), 200
+        return {"message": f"ERROR: Couldn't find requested contact <email={email}>"}, 404
 
     def post(self, email: str):
         contact = ContactModel.find_by_email(email)
@@ -32,9 +32,9 @@ class Contact(Resource):
         try:
             contact.save_to_db()
         except:
-            return {"message": f"ERROR: Couldn't save to database <email={email}>"}
+            return {"message": f"ERROR: Couldn't save to database <email={email}>"}, 500
 
-        return contact_schema.dump(contact)
+        return contact_schema.dump(contact), 201
 
     def put(self, email: str):
         contact_json = request.get_json()
@@ -51,16 +51,16 @@ class Contact(Resource):
             contact_json["phone"] = "+52" + contact_json["phone"]
             contact = contact_schema.load(contact_json)
         contact.save_to_db()
-        return contact_schema.dump(contact)
+        return contact_schema.dump(contact), 200
 
     def delete(self, email: str):
         contact = ContactModel.find_by_email(email)
         if contact:
             contact.delete_from_db()
-            return {"message": f"deleted contact <email={email}>"}
-        return {"message": f"ERROR: Couldn't delete from database <email={email}>"}
+            return {"message": f"deleted contact <email={email}>"}, 200
+        return {"message": f"ERROR: Couldn't delete from database <email={email}>"}, 404
 
 
 class ContactList(Resource):
     def get(self):
-        return {"content": contact_list_schema.dump(ContactModel.find_all())}
+        return {"content": contact_list_schema.dump(ContactModel.find_all())}, 200
