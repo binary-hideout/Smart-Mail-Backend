@@ -1,5 +1,5 @@
 from typing import List
-from db import db
+from apps.db import db
 from datetime import datetime
 
 
