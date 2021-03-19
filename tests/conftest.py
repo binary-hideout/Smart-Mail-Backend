@@ -19,6 +19,3 @@ def client(app):
 def runner(app):
     return app.test_cli_runner()
 
-def test_hello(client):
-    response = client.get('/contacts')
-    assert response.data == b'{"content": []}'
