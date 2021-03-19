@@ -12,8 +12,8 @@ class Tag(Resource):
     def get(self, title: str):
         tag = TagModel.find_by_title(title)
         if tag:
-            return tag_schema.dump(tag)
-        return {"message": f"ERROR: Couldn't find requested tag <title={title}>"}
+            return tag_schema.dump(tag), 200
+        return {"message": f"ERROR: Couldn't find requested tag <title={title}>"}, 404
 
     def post(self, title: str):
         tag = TagModel.find_by_title(title)
@@ -29,8 +29,8 @@ class Tag(Resource):
         try:
             tag.save_to_db()
         except:
-            return {"message": f"ERROR: Couldn't save to database"}
-        return tag_schema.dump(tag)
+            return {"message": f"ERROR: Couldn't save to database"}, 500
+        return tag_schema.dump(tag), 201
 
     def put(self, title: str):
         tag_json = request.get_json()
@@ -41,16 +41,16 @@ class Tag(Resource):
             tag_json["title"] = title
             tag = tag_schema.load(tag_json)
         tag.save_to_db()
-        return tag_schema.dump(tag)
+        return tag_schema.dump(tag), 200
 
     def delete(self, title: str):
         tag = TagModel.find_by_title(title)
         if tag:
             tag.delete_from_db()
-            return {"message": f"deleted tag <title={title}>"}
-        return {"message": "ERROR: Couldn't delete from database"}
+            return {"message": f"deleted tag <title={title}>"}, 200
+        return {"message": "ERROR: Couldn't delete from database"}, 404
 
 
 class TagList(Resource):
     def get(self):
-        return {"content": tag_list_schema.dump(TagModel.find_all())}
+        return {"content": tag_list_schema.dump(TagModel.find_all())}, 200
