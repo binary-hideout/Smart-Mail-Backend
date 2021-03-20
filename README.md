@@ -24,6 +24,8 @@ Run the tests
 
     $ pytest
     $ coverage run -m pytest
+    $ coverage report
+    $ coverage html
 
 Create environment variables
 ----------------------------
