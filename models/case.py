@@ -1,5 +1,5 @@
 from typing import List
-from db import db
+from apps.db import db
 from datetime import datetime
 
 
@@ -12,6 +12,7 @@ class CaseModel(db.Model):
     tag_id = db.Column(db.Integer, db.ForeignKey("tags.id"), nullable=False)
     contact_id = db.Column(db.Integer, db.ForeignKey("contacts.id"), nullable=False)
 
+    
     def __repr__(self):
         return f"<Case={self.title}>"
 

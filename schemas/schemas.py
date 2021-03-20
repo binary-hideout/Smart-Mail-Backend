@@ -1,4 +1,4 @@
-from ma import ma
+from apps.ma import ma
 from models.contact import ContactModel
 from models.tag import TagModel
 from models.case import CaseModel
