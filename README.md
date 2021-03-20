@@ -36,6 +36,13 @@ Follow the .env.example file:
     APP_SECRET_KEY = <your-app-secret-key>
     APPLICATION_SETTINGS = default_settings.py
 
+Run the app
+-----------
+
+    $ export FLASK_APP=smartmail
+    $ export FLASK_ENV=development
+    $ flask run
+
 Endpoints
 ---------
 
