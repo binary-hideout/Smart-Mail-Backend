@@ -36,7 +36,7 @@ class Case(Resource):
         case_json = request.get_json()
         case = CaseModel.find_by_title(title)
         if case:
-            case.title = case_json["title"]
+            case.title = title
             case.description = case_json["description"]
             case.tag_id = case_json["tag_id"]
             case.contact_id = case_json["contact_id"]
@@ -47,7 +47,7 @@ class Case(Resource):
         return case_schema.dump(case), 200
 
     def delete(self, title: str):
-        case = CaseModel.find_by_name(title)
+        case = CaseModel.find_by_title(title)
         if case:
             case.delete_from_db()
             return {"message": f"deleted tag <title={title}>"}, 200
