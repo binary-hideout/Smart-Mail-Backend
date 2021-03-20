@@ -13,9 +13,10 @@ Create a virtualenv and activate
 
     $ cd Smart-Mail-Backend
     $ virtualenv venv
-    $ cd venv
-    $ cd Scripts
-    $ activate.bat
+    $ source venv/bin/activate
+
+Install the requirements
+
     $ pip install -r requirements.txt
 
 Run the tests
@@ -24,12 +25,14 @@ Run the tests
     $ pytest
     $ coverage run -m pytest
 
-Create environment variables (.env)
------------------------------------
+Create environment variables
+----------------------------
 
-    $
-    $
-    $
+Follow the .env.example file:
+
+    DATABASE_URL = <your-database-connection-string>
+    APP_SECRET_KEY = <your-app-secret-key>
+    APPLICATION_SETTINGS = default_settings.py
 
 Endpoints
 ---------
