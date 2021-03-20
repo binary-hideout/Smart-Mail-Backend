@@ -34,6 +34,9 @@ Follow the .env.example file:
 
     DATABASE_URL = <your-database-connection-string>
     APP_SECRET_KEY = <your-app-secret-key>
+    TESTING_DATABASE_URL = <sqlite:///data.db>
+    TESTING_APP_SECRET_KEY = <your-testing-app-secret-key>
+    TESTING_SETTINGS = testing_settings.py
     APPLICATION_SETTINGS = default_settings.py
 
 Run the app
