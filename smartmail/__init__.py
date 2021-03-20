@@ -17,7 +17,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY="dev",
-        DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
+        DATABASE=os.path.join(app.instance_path, "smartmail.sqlite"),
     )
     load_dotenv(".env", verbose=True)
     if test_config is None:
@@ -25,7 +25,6 @@ def create_app(test_config=None):
         app.config.from_envvar("APPLICATION_SETTINGS")
     else:
         app.config.from_mapping(test_config)
-        app.config.from_envvar("TESTING_SETTINGS")
     api = Api(app)
     db.init_app(app)
     ma.init_app(app)
