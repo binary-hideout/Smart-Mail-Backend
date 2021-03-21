@@ -50,7 +50,17 @@ Endpoints
 ---------
 
 * **GET** `http://127.0.0.1:5000/contacts`
-* **GET** `http://127.0.0.1:5000/contact/<string: name>`
-* **POST** `http://127.0.0.1:5000/contact/<string: name>`
-* **DELETE** `http://127.0.0.1:5000/contact/<string: name>`
-* **PUT** `http://127.0.0.1:5000/contact/<string: name>`
+* **GET** `http://127.0.0.1:5000/contact/<string: email>`
+* **POST** `http://127.0.0.1:5000/contact/<string: email>`
+* **DELETE** `http://127.0.0.1:5000/contact/<string: email>`
+* **PUT** `http://127.0.0.1:5000/contact/<string: email>`
+* **GET** `http://127.0.0.1:5000/tags`
+* **GET** `http://127.0.0.1:5000/tag/<string: title>`
+* **POST** `http://127.0.0.1:5000/tag/<string: title>`
+* **DELETE** `http://127.0.0.1:5000/tag/<string: title>`
+* **PUT** `http://127.0.0.1:5000/tag/<string: title>`
+* **GET** `http://127.0.0.1:5000/cases`
+* **GET** `http://127.0.0.1:5000/case/<string: title>`
+* **POST** `http://127.0.0.1:5000/case/<string: title>`
+* **DELETE** `http://127.0.0.1:5000/case/<string: title>`
+* **PUT** `http://127.0.0.1:5000/case/<string: title>`
