@@ -6,7 +6,8 @@ The lightweight automatic call dashboard that fits your needs.
 Install
 -------
 
-    # clone the repository 
+Clone the repository 
+
     $ git clone https://github.com/binary-hideout/Smart-Mail-Backend.git
 
 Create a virtualenv and activate
