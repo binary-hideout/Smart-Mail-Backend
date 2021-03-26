@@ -22,10 +22,8 @@ def create_app(test_config=None):
     load_dotenv(".env", verbose=True)
     if test_config is None:
         app.config.from_pyfile("default_settings.py", silent=True)
-        # app.config.from_envvar("APPLICATION_SETTINGS")
     else:
         app.config.from_pyfile("testing_settings.py", silent=True)
-        app.config.from_envvar("TESTING_SETTINGS")
     api = Api(app)
     db.init_app(app)
     ma.init_app(app)
