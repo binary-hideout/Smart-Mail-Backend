@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
-from schemas.schemas import TagSchema
-from models.tag import TagModel
+from smartmail.schemas.schemas import TagSchema
+from smartmail.models.tag import TagModel
 from marshmallow import ValidationError
 
 tag_schema = TagSchema()

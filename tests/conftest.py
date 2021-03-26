@@ -3,8 +3,8 @@ import tempfile
 
 import pytest
 
-from apps.db import db
-from apps.ma import ma
+from smartmail.apps.db import db
+from smartmail.apps.ma import ma
 
 from smartmail import create_app
 

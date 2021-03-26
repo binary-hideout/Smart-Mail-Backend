@@ -1,6 +1,6 @@
-from models.contact import ContactModel
-from models.tag import TagModel
-from models.case import CaseModel
+from smartmail.models.contact import ContactModel
+from smartmail.models.tag import TagModel
+from smartmail.models.case import CaseModel
 
 def test_contactmodel_save(app):
     with app.app_context():

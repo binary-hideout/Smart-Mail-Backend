@@ -1,5 +1,5 @@
 from typing import List
-from apps.db import db
+from smartmail.apps.db import db
 from datetime import datetime
 
 

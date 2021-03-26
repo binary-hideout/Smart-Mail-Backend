@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
-from schemas.schemas import ContactSchema
-from models.contact import ContactModel
+from smartmail.schemas.schemas import ContactSchema
+from smartmail.models.contact import ContactModel
 from marshmallow import ValidationError
 
 contact_schema = ContactSchema()

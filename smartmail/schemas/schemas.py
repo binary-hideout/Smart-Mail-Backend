@@ -1,7 +1,7 @@
-from apps.ma import ma
-from models.contact import ContactModel
-from models.tag import TagModel
-from models.case import CaseModel
+from smartmail.apps.ma import ma
+from smartmail.models.contact import ContactModel
+from smartmail.models.tag import TagModel
+from smartmail.models.case import CaseModel
 
 class CaseSchema(ma.SQLAlchemyAutoSchema):
     contact = ma.Nested(lambda: ContactSchema(only=("id", "email", "phone")))

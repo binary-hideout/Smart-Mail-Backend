@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
-from schemas.schemas import CaseSchema
-from models.case import CaseModel
+from smartmail.schemas.schemas import CaseSchema
+from smartmail.models.case import CaseModel
 from marshmallow import ValidationError
 
 case_schema = CaseSchema()
