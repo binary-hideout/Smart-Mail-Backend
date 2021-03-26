@@ -42,3 +42,5 @@ def create_app(test_config=None):
     api.add_resource(TagList, "/tags")
 
     return app
+
+app = create_app()
