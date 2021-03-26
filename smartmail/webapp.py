@@ -1,1 +1,1 @@
-from smartmail import app
+from . import app
