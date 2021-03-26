@@ -14,16 +14,16 @@ from dotenv import load_dotenv
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=False)
     app.config.from_mapping(
         SECRET_KEY="dev",
         DATABASE=os.path.join(app.instance_path, "smartmail.sqlite"),
     )
     load_dotenv(".env", verbose=True)
     if test_config is None:
-        app.config.from_pyfile("default_settings.py", silent=True)
+        app.config.from_pyfile("default_settings.py", silent=False)
     else:
-        app.config.from_pyfile("testing_settings.py", silent=True)
+        app.config.from_pyfile("testing_settings.py", silent=False)
     api = Api(app)
     db.init_app(app)
     ma.init_app(app)
