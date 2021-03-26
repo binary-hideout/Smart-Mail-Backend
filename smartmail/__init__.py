@@ -26,7 +26,7 @@ def create_app(test_config=None):
     else:
         app.config.from_pyfile("testing_settings.py", silent=True)
         app.config.from_envvar("TESTING_SETTINGS")
-    api = Api()
+    api = Api(app)
     db.init_app(app)
     ma.init_app(app)
 
@@ -40,9 +40,5 @@ def create_app(test_config=None):
     api.add_resource(CaseList, "/cases")
     api.add_resource(Tag, "/tag/<string:title>")
     api.add_resource(TagList, "/tags")
-    api.init_app(app)
 
     return app
-
-
-app = create_app()
