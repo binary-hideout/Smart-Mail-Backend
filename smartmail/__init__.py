@@ -2,13 +2,16 @@ import os
 
 from flask import Flask
 from flask_restful import Api
+from flask_jwt_extended import JWTManager
 
 from smartmail.resources.contact import Contact, ContactList
 from smartmail.resources.case import Case, CaseList
 from smartmail.resources.tag import Tag, TagList
+from smartmail.resources.user import User, UserLogin, UserRegister, UserLogout, TokenRefresh
 
 from smartmail.apps.db import db
 from smartmail.apps.ma import ma
+from smartmail.blacklist import BLACKLIST
 
 from dotenv import load_dotenv
 
@@ -25,6 +28,12 @@ def create_app(test_config=None):
     else:
         app.config.from_object("smartmail.testing_settings")
     api = Api(app)
+    jwt = JWTManager(app)
+
+    @jwt.token_in_blocklist_loader
+    def check_if_token_in_blacklist(jwt_header, jwt_payload):
+        return jwt_payload["jti"] in BLACKLIST
+
     db.init_app(app)
     ma.init_app(app)
 
@@ -32,6 +41,11 @@ def create_app(test_config=None):
     def create_tables():
         db.create_all()
 
+    api.add_resource(User, "/user/<int:user_id>")
+    api.add_resource(UserLogin, "/login")
+    api.add_resource(UserRegister, "/register")
+    api.add_resource(UserLogout, "/logout")
+    api.add_resource(TokenRefresh, "/refresh")
     api.add_resource(Contact, "/contact/<string:email>")
     api.add_resource(ContactList, "/contacts")
     api.add_resource(Case, "/case/<string:title>")
