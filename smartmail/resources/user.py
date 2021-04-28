@@ -19,7 +19,7 @@ user_schema = UserSchema()
 class UserRegister(Resource):
     @classmethod
     def post(cls):
-        user = user_schema.load(request.get_json())
+        user = user_schema.load(request.form.copy())
         if UserModel.find_by_username(user.username):
             return {"message": f"ERROR: Username already exists <user={user.username}>"}, 400
         if UserModel.find_by_email(user.email):
@@ -39,19 +39,11 @@ class User(Resource):
         if not User:
             return {"message": "User not found"}, 404
         return user_schema.dump(user), 200
-    
-    @classmethod
-    def delete(cls, user_id: int):
-        user = UserModel.find_by_id(user_id)
-        if not User:
-            return {"message": "User not found"}, 404
-        user.delete_from_db()
-        return {"message": "User deleted succesfully"}, 200
 
 class UserLogin(Resource):
     @classmethod
     def post(cls):
-        user_data = user_schema.load(request.get_json(), partial=("email",))
+        user_data = user_schema.load(request.form.copy(), partial=("email",))
         user = UserModel.find_by_username(user_data.username)
         if user and safe_str_cmp(user.password, user_data.password):
             access_token = create_access_token(identity=user.id, fresh=True)

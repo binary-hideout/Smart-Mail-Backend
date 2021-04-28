@@ -4,9 +4,9 @@ from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from smartmail.resources.contact import Contact, ContactList
-from smartmail.resources.case import Case, CaseList
-from smartmail.resources.tag import Tag, TagList
+from smartmail.resources.contact import Contact, ContactDelete, ContactList
+from smartmail.resources.case import Case, CaseDelete, CaseList
+from smartmail.resources.tag import Tag, TagDelete, TagList
 from smartmail.resources.user import User, UserLogin, UserRegister, UserLogout, TokenRefresh
 
 from smartmail.apps.db import db
@@ -47,10 +47,13 @@ def create_app(test_config=None):
     api.add_resource(UserLogout, "/logout")
     api.add_resource(TokenRefresh, "/refresh")
     api.add_resource(Contact, "/contact/<string:email>")
+    api.add_resource(ContactDelete, "/contact/delete/<string:email>")
     api.add_resource(ContactList, "/contacts")
     api.add_resource(Case, "/case/<string:title>")
+    api.add_resource(CaseDelete, "/case/delete/<string:title>")
     api.add_resource(CaseList, "/cases")
     api.add_resource(Tag, "/tag/<string:title>")
+    api.add_resource(TagDelete, "/tag/delete/<string:title>")
     api.add_resource(TagList, "/tags")
 
     return app
