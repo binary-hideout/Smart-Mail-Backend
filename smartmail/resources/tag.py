@@ -31,16 +31,16 @@ class Tag(Resource):
             tag = tag_schema.load(tag_data)
         tag.save_to_db()
         # return tag_schema.dump(tag), 200
-        return redirect(url_for('tag', title=title))
+        return redirect(url_for("tag", title=title))
+
 
 class TagDelete(Resource):
-
     def get(self, title: str):
         tag = TagModel.find_by_title(title)
         if tag:
             tag.delete_from_db()
             # return {"message": f"deleted tag <title={title}>"}, 200
-            return redirect(url_for('taglist'))
+            return redirect(url_for("taglist"))
         return {"message": "ERROR: Couldn't delete from database"}, 404
 
 
@@ -49,7 +49,9 @@ class TagList(Resource):
         # return {"content": tag_list_schema.dump(TagModel.find_all())}, 200
         headers = {"Content-Type": "text-html"}
         return make_response(
-            render_template("tags.html", results=tag_list_schema.dump(TagModel.find_all())),
+            render_template(
+                "tags.html", results=tag_list_schema.dump(TagModel.find_all())
+            ),
             200,
             headers,
         )

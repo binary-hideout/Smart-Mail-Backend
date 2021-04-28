@@ -26,7 +26,7 @@ class Case(Resource):
             400,
             headers,
         )
-        
+
     def post(self, title: str):
         case_data = request.form.copy()
         case = CaseModel.find_by_title(title)
@@ -47,15 +47,15 @@ class Case(Resource):
             headers,
         )
 
-class CaseDelete(Resource):
 
+class CaseDelete(Resource):
     def get(self, title: str):
         case = CaseModel.find_by_title(title)
         if case:
             case.delete_from_db()
             # return {"message": f"deleted tag <title={title}>"}, 200
             headers = {"Content-Type": "text-html"}
-            return redirect(url_for('caselist'))
+            return redirect(url_for("caselist"))
         # return {"message": "ERROR: Couldn't delete from database"}, 404
         headers = {"Content-Type": "text-html"}
         return make_response(
@@ -70,7 +70,9 @@ class CaseList(Resource):
         # return {"content": case_list_schema.dump(CaseModel.find_all())}, 200
         headers = {"Content-Type": "text-html"}
         return make_response(
-            render_template("cases.html", results=case_list_schema.dump(CaseModel.find_all())),
+            render_template(
+                "cases.html", results=case_list_schema.dump(CaseModel.find_all())
+            ),
             200,
             headers,
         )
@@ -97,4 +99,4 @@ class CaseList(Resource):
                 headers,
             )
         # return case_schema.dump(case), 201
-        return redirect(url_for('caselist'))
+        return redirect(url_for("caselist"))

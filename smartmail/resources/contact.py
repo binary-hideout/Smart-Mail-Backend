@@ -19,7 +19,9 @@ class Contact(Resource):
                 200,
                 headers,
             )
-        return {"message": f"ERROR: Couldn't find requested contact <email={email}>"}, 404
+        return {
+            "message": f"ERROR: Couldn't find requested contact <email={email}>"
+        }, 404
 
     def post(self, email: str):
         contact_data = request.form.copy()
@@ -36,26 +38,29 @@ class Contact(Resource):
             contact_data["phone"] = "+52" + contact_data["phone"]
             contact = contact_schema.load(contact_data)
         contact.save_to_db()
-        return redirect(url_for('contact', email=email))
+        return redirect(url_for("contact", email=email))
+
 
 class ContactDelete(Resource):
-
     def get(self, email: str):
         contact = ContactModel.find_by_email(email)
         if contact:
             contact.delete_from_db()
             # return {"message": f"deleted contact <email={email}>"}, 200
-            return redirect(url_for('contactlist'))
+            return redirect(url_for("contactlist"))
         return {"message": f"ERROR: Couldn't delete from database <email={email}>"}, 404
 
 
 class ContactList(Resource):
     def get(self):
-        
+
         # return {"content": contact_list_schema.dump(ContactModel.find_all())}, 200
         headers = {"Content-Type": "text-html"}
         return make_response(
-            render_template("contacts.html", results=contact_list_schema.dump(ContactModel.find_all())),
+            render_template(
+                "contacts.html",
+                results=contact_list_schema.dump(ContactModel.find_all()),
+            ),
             200,
             headers,
         )
@@ -85,4 +90,4 @@ class ContactList(Resource):
         #     201,
         #     headers,
         # )
-        return redirect(url_for('contactlist'))
+        return redirect(url_for("contactlist"))
