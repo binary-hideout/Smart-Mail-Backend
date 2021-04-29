@@ -3,6 +3,7 @@ from flask_restful import Resource
 from smartmail.schemas.schemas import CaseSchema
 from smartmail.models.case import CaseModel
 from marshmallow import ValidationError
+from flask_jwt_extended import jwt_required
 
 case_schema = CaseSchema()
 case_list_schema = CaseSchema(many=True)
@@ -20,13 +21,13 @@ class Case(Resource):
                 200,
                 headers,
             )
-        # return {"message": f"ERROR: Couldn't find requested case <title={title}>"}, 400
-        headers = {"Content-Type": "text-html"}
-        return make_response(
-            render_template("400.html"),
-            400,
-            headers,
-        )
+        return {"message": f"ERROR: Couldn't find requested case <title={title}>"}, 400
+        # headers = {"Content-Type": "text-html"}
+        # return make_response(
+        #     render_template("400.html"),
+        #     400,
+        #     headers,
+        # )
 
     @jwt_required()
     def post(self, title: str):
@@ -42,12 +43,13 @@ class Case(Resource):
             case = case_schema.load(case_data)
         case.save_to_db()
         # return case_schema.dump(case), 200
-        headers = {"Content-Type": "text-html"}
-        return make_response(
-            render_template("case.html", result=case_schema.dump(case)),
-            200,
-            headers,
-        )
+        # headers = {"Content-Type": "text-html"}
+        # return make_response(
+        #     render_template("case.html", result=case_schema.dump(case)),
+        #     200,
+        #     headers,
+        # )
+        return redirect(url_for('case', title=title))
 
 
 class CaseDelete(Resource):
@@ -60,13 +62,13 @@ class CaseDelete(Resource):
             headers = {"Content-Type": "text-html"}
             return redirect(url_for("caselist"))
         # return {"message": "ERROR: Couldn't delete from database"}, 404
-        headers = {"Content-Type": "text-html"}
-        return make_response(
-            render_template("404.html"),
-            404,
-            headers,
-        )
-
+        # headers = {"Content-Type": "text-html"}
+        # return make_response(
+        #     render_template("404.html"),
+        #     404,
+        #     headers,
+        # )
+        return redirect(url_for('caselist'))
 
 class CaseList(Resource):
     @jwt_required()
@@ -96,12 +98,12 @@ class CaseList(Resource):
         try:
             case.save_to_db()
         except:
-            # return {"message": f"ERROR: Couldn't save to database"}, 500
-            headers = {"Content-Type": "text-html"}
-            return make_response(
-                render_template("500.html"),
-                500,
-                headers,
-            )
+            return {"message": f"ERROR: Couldn't save to database"}, 500
+            # headers = {"Content-Type": "text-html"}
+            # return make_response(
+            #     render_template("500.html"),
+            #     500,
+            #     headers,
+            # )
         # return case_schema.dump(case), 201
         return redirect(url_for("caselist"))

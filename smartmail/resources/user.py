@@ -49,6 +49,7 @@ class UserRegister(Resource):
 
 
 class User(Resource):
+    @jwt_required
     @classmethod
     def get(cls, user_id: int):
         user = UserModel.find_by_id(user_id)
@@ -74,7 +75,8 @@ class UserLogin(Resource):
         if user and safe_str_cmp(user.password, user_data.password):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
-            response = jsonify({"msg": "login successful"})
+            # response = jsonify({"msg": "login successful"})
+            response =  redirect(url_for('contactlist'))
             set_access_cookies(response, access_token)
             set_refresh_cookies(response, refresh_token)
             return response
@@ -84,11 +86,12 @@ class UserLogin(Resource):
 class UserLogout(Resource):
     @classmethod
     @jwt_required()
-    def post(cls):
+    def get(cls):
         jti = get_jwt()["jti"]
         user_id = get_jwt_identity()
         BLACKLIST.add(jti)
-        return {"message": "User logged out"}
+        response =  redirect(url_for('userlogin'))
+        return response
 
 
 class TokenRefresh(Resource):

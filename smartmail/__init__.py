@@ -3,6 +3,7 @@ import os
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
+from flask_wtf.csrf import CSRFProtect
 
 from smartmail.resources.contact import Contact, ContactDelete, ContactList
 from smartmail.resources.case import Case, CaseDelete, CaseList
@@ -29,6 +30,7 @@ def create_app(test_config=None):
         app.config.from_object("smartmail.testing_settings")
     api = Api(app)
     jwt = JWTManager(app)
+    csrf = CSRFProtect()
 
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blacklist(jwt_header, jwt_payload):
@@ -36,6 +38,7 @@ def create_app(test_config=None):
 
     db.init_app(app)
     ma.init_app(app)
+    csrf.init_app(app)
 
     @app.before_first_request
     def create_tables():

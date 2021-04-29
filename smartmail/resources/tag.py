@@ -3,6 +3,7 @@ from flask_restful import Resource
 from smartmail.schemas.schemas import TagSchema
 from smartmail.models.tag import TagModel
 from marshmallow import ValidationError
+from flask_jwt_extended import jwt_required
 
 tag_schema = TagSchema()
 tag_list_schema = TagSchema(many=True)
@@ -77,4 +78,5 @@ class TagList(Resource):
             tag.save_to_db()
         except:
             return {"message": f"ERROR: Couldn't save to database"}, 500
-        return tag_schema.dump(tag), 201
+        # return tag_schema.dump(tag), 201
+        return redirect(url_for('taglist'))
