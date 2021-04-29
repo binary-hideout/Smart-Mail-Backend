@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from flask import request, make_response, render_template, redirect, url_for
+from flask import request, jsonify, make_response, render_template, redirect, url_for
 from smartmail.models.user import UserModel
 from werkzeug.security import safe_str_cmp
 from flask_jwt_extended import (
@@ -8,6 +8,8 @@ from flask_jwt_extended import (
     get_jwt_identity,
     jwt_required,
     get_jwt,
+    set_access_cookies,
+    set_refresh_cookies
 )
 from marshmallow import ValidationError
 from smartmail.blacklist import BLACKLIST
@@ -38,7 +40,8 @@ class UserRegister(Resource):
             return {"message": f"ERROR: Email already exists <user={user.email}>"}, 400
         try:
             user.save_to_db()
-            return redirect(url_for("login")), 201
+            return redirect(url_for("userlogin"))
+            # return {"message": "User created"}, 201
         except:
             traceback.print_exc()
             user.delete_from_db()
@@ -71,10 +74,10 @@ class UserLogin(Resource):
         if user and safe_str_cmp(user.password, user_data.password):
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
-            return {
-                "access_token": access_token,
-                "refresh_token": refresh_token,
-            }, 200
+            response = jsonify({"msg": "login successful"})
+            set_access_cookies(response, access_token)
+            set_refresh_cookies(response, refresh_token)
+            return response
         return {"message": "Incorrect login data"}, 400
 
 

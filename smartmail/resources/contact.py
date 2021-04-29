@@ -3,12 +3,14 @@ from flask_restful import Resource
 from smartmail.schemas.schemas import ContactSchema
 from smartmail.models.contact import ContactModel
 from marshmallow import ValidationError
+from flask_jwt_extended import jwt_required
 
 contact_schema = ContactSchema()
 contact_list_schema = ContactSchema(many=True)
 
 
 class Contact(Resource):
+    @jwt_required()
     def get(self, email: str):
         contact = ContactModel.find_by_email(email)
         if contact:
@@ -23,6 +25,7 @@ class Contact(Resource):
             "message": f"ERROR: Couldn't find requested contact <email={email}>"
         }, 404
 
+    @jwt_required()
     def post(self, email: str):
         contact_data = request.form.copy()
         contact = ContactModel.find_by_email(email)
@@ -42,6 +45,7 @@ class Contact(Resource):
 
 
 class ContactDelete(Resource):
+    @jwt_required()
     def get(self, email: str):
         contact = ContactModel.find_by_email(email)
         if contact:
@@ -52,6 +56,7 @@ class ContactDelete(Resource):
 
 
 class ContactList(Resource):
+    @jwt_required()
     def get(self):
 
         # return {"content": contact_list_schema.dump(ContactModel.find_all())}, 200
@@ -65,6 +70,7 @@ class ContactList(Resource):
             headers,
         )
 
+    @jwt_required()
     def post(self):
         contact_data = request.form.copy()
         contact_data["phone"] = "+52" + contact_data["phone"]
