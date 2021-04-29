@@ -9,6 +9,7 @@ case_list_schema = CaseSchema(many=True)
 
 
 class Case(Resource):
+    @jwt_required()
     def get(self, title: str):
         case = CaseModel.find_by_title(title)
         if case:
@@ -27,6 +28,7 @@ class Case(Resource):
             headers,
         )
 
+    @jwt_required()
     def post(self, title: str):
         case_data = request.form.copy()
         case = CaseModel.find_by_title(title)
@@ -49,6 +51,7 @@ class Case(Resource):
 
 
 class CaseDelete(Resource):
+    @jwt_required()
     def get(self, title: str):
         case = CaseModel.find_by_title(title)
         if case:
@@ -66,6 +69,7 @@ class CaseDelete(Resource):
 
 
 class CaseList(Resource):
+    @jwt_required()
     def get(self):
         # return {"content": case_list_schema.dump(CaseModel.find_all())}, 200
         headers = {"Content-Type": "text-html"}
@@ -77,6 +81,7 @@ class CaseList(Resource):
             headers,
         )
 
+    @jwt_required()
     def post(self):
         case_data = request.form.copy()
         title = case_data["title"]
