@@ -32,6 +32,7 @@ class Call(Resource):
         contact = ContactModel.find_by_email(email)
         if contact:
             file_path = save_text(call_data['message'], call_data['language'], 'message.mp3')
-            play_sound(mpg123_exec_path, file_path)
             phone_call(adb_exec_path, "7120018020022742", contact.phone)
+            sleep(45)
+            play_sound(mpg123_exec_path, file_path)
         return redirect(url_for('caselist'))
