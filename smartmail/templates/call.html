@@ -50,21 +50,20 @@
         </div>
         <div class="row">
             <form method="POST">
+                {{ form.hidden_tag() }}
                 <div class="mb-3">
                     <label for="staticLast" class="col-sm-2 col-form-label">Lenguaje</label>
                     <div class="col-sm-10">
-                        <input type="text" name="language" class="form-control" id="staticLast" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default">
+                        {{ form.language(class_="form-control", size=50) }}
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="staticLast" class="col-sm-2 col-form-label">Mensaje</label>
                     <div class="col-sm-10">
-                        <input type="text" name="message" class="form-control" id="staticLast" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default">
+                        {{ form.message(class_="form-control", size=50) }}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Llamar</button>
+                <button type="submit" class="btn btn-primary" value="Go">Llamar</button>
             </form>
         </div>
     </div>
