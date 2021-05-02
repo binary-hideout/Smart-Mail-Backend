@@ -58,40 +58,32 @@
                             </div>
                             <div class="modal-body">
                                 <form method="POST">
+                                    {{ form.hidden_tag() }}
                                     <div class="mb-3">
                                         <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-sm-10">
-                                            <input type="email" name="email" id="exampleInputEmail1"
-                                                class="form-control" aria-describedby="emailHelp">
-                                            <div id="emailHelp" class="form-text">We'll never share your email with
-                                                anyone else.</div>
+                                            {{ form.email(class_="form-control", size=50) }}
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="staticName" class="col-sm-2 col-form-label">Nombre</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="first_name" class="form-control" id="staticName"
-                                                aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-default">
+                                            {{ form.first_name(class_="form-control", size=50) }}
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="staticLast" class="col-sm-2 col-form-label">Apellido</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="last_name" class="form-control" id="staticLast"
-                                                aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-default">
+                                            {{ form.last_name(class_="form-control", size=50) }}
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="staticPhone" class="col-sm-2 col-form-label">Telefono</label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="phone" class="form-control" id="staticPhone"
-                                                aria-label="Sizing example input"
-                                                aria-describedby="inputGroup-sizing-default">
+                                            {{ form.phone(class_="form-control", size=50) }}
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Crear</button>
+                                    <button type="submit" class="btn btn-primary" value="Go">Crear</button>
                                 </form>
                             </div>
                         </div>
@@ -125,7 +117,7 @@
                         <td>{{ result["created"] }}</td>
                         <td><a href="{{ url_for('contact', email=result['email']) }}">editar</a></td>
                         <td><a href="{{ url_for('contactdelete', email=result['email']) }}">borrar</a></td>
-                        <td><a href="#">contactar</a></td>
+                        <td><a href="{{ url_for('call', email=result['email']) }}">contactar</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

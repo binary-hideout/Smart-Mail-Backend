@@ -14,6 +14,7 @@ from flask_jwt_extended import (
 from marshmallow import ValidationError
 from smartmail.blacklist import BLACKLIST
 from smartmail.schemas.schemas import UserSchema
+from smartmail.forms.user import UserLoginForm, UserRegisterForm
 import traceback
 
 user_schema = UserSchema()
@@ -22,30 +23,34 @@ user_schema = UserSchema()
 class UserRegister(Resource):
     @classmethod
     def get(cls):
+        user_register_form = UserRegisterForm()
         headers = {"Content-Type": "text-html"}
         return make_response(
-            render_template("register.html"),
+            render_template("register.html", form=user_register_form),
             200,
             headers,
         )
 
     @classmethod
     def post(cls):
-        user = user_schema.load(request.form.copy())
-        if UserModel.find_by_username(user.username):
-            return {
-                "message": f"ERROR: Username already exists <user={user.username}>"
-            }, 400
-        if UserModel.find_by_email(user.email):
-            return {"message": f"ERROR: Email already exists <user={user.email}>"}, 400
-        try:
-            user.save_to_db()
-            return redirect(url_for("userlogin"))
-            # return {"message": "User created"}, 201
-        except:
-            traceback.print_exc()
-            user.delete_from_db()
-            return {"message": "Unable to register user"}, 500
+        user_register_form = UserRegisterForm()
+        if user_register_form.validate_on_submit():
+            user_register_form = UserRegisterForm()
+            user = user_schema.load(request.form.copy())
+            if UserModel.find_by_username(user.username):
+                return {
+                    "message": f"ERROR: Username already exists <user={user.username}>"
+                }, 400
+            if UserModel.find_by_email(user.email):
+                return {"message": f"ERROR: Email already exists <user={user.email}>"}, 400
+            try:
+                user.save_to_db()
+                return redirect(url_for("userlogin"))
+                # return {"message": "User created"}, 201
+            except:
+                traceback.print_exc()
+                user.delete_from_db()
+                return {"message": "Unable to register user"}, 500
 
 
 class User(Resource):
@@ -61,31 +66,34 @@ class User(Resource):
 class UserLogin(Resource):
     @classmethod
     def get(cls):
+        user_login_form = UserLoginForm()
         headers = {"Content-Type": "text-html"}
         return make_response(
-            render_template("login.html"),
+            render_template("login.html", form=user_login_form),
             200,
             headers,
         )
 
     @classmethod
     def post(cls):
-        user_data = user_schema.load(request.form.copy(), partial=("email",))
-        user = UserModel.find_by_username(user_data.username)
-        if user and safe_str_cmp(user.password, user_data.password):
-            access_token = create_access_token(identity=user.id, fresh=True)
-            refresh_token = create_refresh_token(user.id)
-            # response = jsonify({"msg": "login successful"})
-            response =  redirect(url_for('contactlist'))
-            set_access_cookies(response, access_token)
-            set_refresh_cookies(response, refresh_token)
-            return response
-        return {"message": "Incorrect login data"}, 400
+        user_login_form = UserLoginForm()
+        if user_login_form.validate_on_submit():
+            user_data = user_schema.load(request.form.copy(), partial=("email",))
+            user = UserModel.find_by_username(user_data.username)
+            if user and safe_str_cmp(user.password, user_data.password):
+                access_token = create_access_token(identity=user.id, fresh=True)
+                refresh_token = create_refresh_token(user.id)
+                # response = jsonify({"msg": "login successful"})
+                response =  redirect(url_for('contactlist'))
+                set_access_cookies(response, access_token)
+                set_refresh_cookies(response, refresh_token)
+                return response
+            return {"message": "Incorrect login data"}, 400
 
 
 class UserLogout(Resource):
     @classmethod
-    @jwt_required()
+    # @jwt_required()
     def get(cls):
         jti = get_jwt()["jti"]
         user_id = get_jwt_identity()

@@ -9,6 +9,8 @@ from smartmail.resources.contact import Contact, ContactDelete, ContactList
 from smartmail.resources.case import Case, CaseDelete, CaseList
 from smartmail.resources.tag import Tag, TagDelete, TagList
 from smartmail.resources.user import User, UserLogin, UserRegister, UserLogout, TokenRefresh
+from smartmail.resources.call import Call
+from smartmail.resources.myform import Test
 
 from smartmail.apps.db import db
 from smartmail.apps.ma import ma
@@ -58,5 +60,7 @@ def create_app(test_config=None):
     api.add_resource(Tag, "/tag/<string:title>")
     api.add_resource(TagDelete, "/tag/delete/<string:title>")
     api.add_resource(TagList, "/tags")
+    api.add_resource(Call, "/call/<string:email>")
+    api.add_resource(Test, "/test")
 
     return app

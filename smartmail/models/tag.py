@@ -6,7 +6,6 @@ class TagModel(db.Model):
     __tablename__ = "tags"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(30), nullable=False)
-    color = db.Column(db.String(50), nullable=False)
     cases = db.relationship("CaseModel", backref="tag", lazy=True)
 
     def __repr__(self):

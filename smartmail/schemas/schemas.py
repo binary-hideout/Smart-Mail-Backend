@@ -8,7 +8,7 @@ from smartmail.models.user import UserModel
 
 class CaseSchema(ma.SQLAlchemyAutoSchema):
     contact = ma.Nested(lambda: ContactSchema(only=("id", "email", "phone")))
-    tag = ma.Nested(lambda: TagSchema(only=("id", "title", "color")))
+    tag = ma.Nested(lambda: TagSchema(only=("id", "title")))
 
     class Meta:
         model = CaseModel
@@ -16,17 +16,21 @@ class CaseSchema(ma.SQLAlchemyAutoSchema):
         include_fk = True
         load_instance = True
 
+    csrf_token = fields.Str()
+
 
 class ContactSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = ContactModel
-        load_only = ("contact",)
+        load_only = ("contact")
         dump_only = (
             "id",
             "created",
         )
         include_fk = True
         load_instance = True
+
+    csrf_token = fields.Str()
 
 
 class TagSchema(ma.SQLAlchemyAutoSchema):
@@ -37,6 +41,7 @@ class TagSchema(ma.SQLAlchemyAutoSchema):
         include_fk = True
         load_instance = True
 
+    csrf_token = fields.Str()
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -46,5 +51,6 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         load_instance = True
 
     id = fields.Int()
+    csrf_token = fields.Str()
     username = fields.Str(required=True)
     password = fields.Str(required=True)

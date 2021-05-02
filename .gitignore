@@ -136,3 +136,7 @@ data.db
 
 # Github
 .github/
+
+/platform-tools
+/sounds
+/mpg123-1.26.5-x86-64

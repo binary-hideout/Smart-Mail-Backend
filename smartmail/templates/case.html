@@ -39,32 +39,23 @@
         </div>
         <div class="row">
             <form method="POST">
-                <div class="mb-3">
-                    <label for="staticTitle" class="col-sm-2 col-form-label">Titulo</label>
-                    <div class="col-sm-10">
-                        <input type="text" readonly class="form-control-plaintext" id="staticTitle"
-                            value="{{ result['title'] }}">
-                    </div>
-                </div>
+                {{ form.hidden_tag() }}
                 <div class="mb-3">
                     <label for="staticDescription" class="col-sm-2 col-form-label">Descripcion</label>
                     <div class="col-sm-10">
-                        <input type="text" name="description" class="form-control" id="staticDescription" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" placeholder="{{ result['description'] }}">
+                        {{ form.description(class_="form-control", size=50) }}
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="staticTag" class="col-sm-2 col-form-label">ID Categoria</label>
                     <div class="col-sm-10">
-                        <input type="text" name="tag_id" class="form-control" id="staticTag" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" placeholder="{{ result['tag_id'] }}">
+                        {{ form.tag_id(class_="form-control", size=50) }}
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="staticContact" class="col-sm-2 col-form-label">ID Contacto</label>
                     <div class="col-sm-10">
-                        <input type="text" name="contact_id" class="form-control" id="staticContact" aria-label="Sizing example input"
-                            aria-describedby="inputGroup-sizing-default" placeholder="{{ result['contact_id'] }}">
+                        {{ form.contact_id(class_="form-control", size=50) }}
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Crear</button>
